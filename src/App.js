@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import LoginForm from "./components/login/LoginForm";
+import TodoList from "./components/ToDo/ToDo-list";
+
+import styles from "./App.module.css";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  useEffect(() => {
+       setIsLoggedIn(localStorage.getItem("isLoggedIn"));
+     }, [isLoggedIn]);
+     
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className={styles.container}>
+        {isLoggedIn ? (
+          <LoginForm onLogin={handleLogin} />
+        ) : (
+          <TodoList />
+        )}
+      </div>
+    </>
   );
 }
 

@@ -1,0 +1,7 @@
+.container {
+  text-align: center;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
