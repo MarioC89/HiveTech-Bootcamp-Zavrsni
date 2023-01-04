@@ -1,30 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 
 import "../login/LoginForm.module.css";
 
-export default function App() {
+export default function LoginForm({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onLogin();
+  };
+
   const {
     register,
-    handleSubmit,
     formState: { errors }
   } = useForm();
 
-  const onSubmit = (data) => {
+  /* const onSubmit = (data) => {
     console.log(data);
     localStorage.setItem('user', JSON.stringify(data));
-  };
+  }; */
 
   
 
   return (
     <div className="formContainer">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Email</label>
           <input
-            type="text"
-            name="email"
+            type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}
             {...register("email", {
               required: "Email is required.",
               pattern: {
@@ -38,16 +44,12 @@ export default function App() {
         <div className="form-control">
           <label>Password</label>
           <input
-            type="password"
-            name="password"
+            type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
             {...register("password", {
               required: true,
               validate: {
                 checkLength: (value) => value.length >= 6,
-                matchPattern: (value) =>
-                  /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=.*[!@#$*])/.test(
-                    value
-                  )
+                matchPattern: (value) =>/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)/.test(value)
               }
             })}
           />
@@ -62,7 +64,7 @@ export default function App() {
           {errors.password?.type === "matchPattern" && (
             <p className="errorMsg">
               Password should contain at least one uppercase letter, lowercase
-              letter, digit, and special symbol.
+              letter, digit.
             </p>
           )}
         </div>
@@ -73,4 +75,4 @@ export default function App() {
       </form>
     </div>
   );
-}
+};

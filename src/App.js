@@ -9,6 +9,7 @@ function App() {
 
   const handleLogin = () => {
     setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", true);
   };
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function App() {
   return (
     <>
       <div className={styles.container}>
-        {isLoggedIn ? (
+        {!isLoggedIn ? (
           <LoginForm onLogin={handleLogin} />
         ) : (
           <TodoList />
