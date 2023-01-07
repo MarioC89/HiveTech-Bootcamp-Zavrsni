@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
+import styles from "../ToDo/ToDo.module.css"
+
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem(isLoggedIn, false);
+    window.location.reload();
+  };
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -34,17 +43,20 @@ const TodoList = () => {
     <>
       <form onSubmit={handleSubmit}>
         <input type="text" name="title" placeholder="Unos novog to do" />
-        <button type="submit">Dodaj</button>
+        <button type="submit" className={styles.add}>Dodaj</button>
       </form>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
             <p>{todo.title}</p>
             <p>{todo.completed ? 'Izvršeno' : 'Nije izvršeno'}</p>
-            <button onClick={() => handleDelete(todo.id)}>Obriši</button>
+            <button onClick={() => handleDelete(todo.id)} className={styles.delete}>Obriši</button>
           </li>
         ))}
       </ul>
+      <button className={styles.logout} onClick={handleLogout}>
+          Log Out
+        </button>
     </>
   );
 };

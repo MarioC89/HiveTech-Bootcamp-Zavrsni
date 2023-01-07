@@ -1,36 +1,41 @@
 import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 
-import "../login/LoginForm.module.css";
+import styles from "../login/LoginForm.module.css";
 
-export default function LoginForm({ onLogin }) {
+export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  function handleSubmit(event) {
+  /* function handleSubmit(event) {
     event.preventDefault();
     onLogin();
+  }; */
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem(isLoggedIn, true);
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+    localStorage.setItem('user', JSON.stringify(data));
   };
 
   const {
     register,
+    handleSubmit,
     formState: { errors }
   } = useForm();
 
-  /* const onSubmit = (data) => {
-    console.log(data);
-    localStorage.setItem('user', JSON.stringify(data));
-  }; */
-
-  
-
   return (
-    <div className="formContainer">
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.form.control}>
           <label>Email</label>
-          <input
-            type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}
+          <input name='email'
+            type="email" id="email" onChange={(e) => setEmail(e.target.value)}
             {...register("email", {
               required: "Email is required.",
               pattern: {
@@ -41,10 +46,10 @@ export default function LoginForm({ onLogin }) {
           />
           {errors.email && <p className="errorMsg">{errors.email.message}</p>}
         </div>
-        <div className="form-control">
+        <div className={styles.form.control}>
           <label>Password</label>
           <input
-            type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
+            type="password" id="password" onChange={(e) => setPassword(e.target.value)}
             {...register("password", {
               required: true,
               validate: {
@@ -54,23 +59,23 @@ export default function LoginForm({ onLogin }) {
             })}
           />
           {errors.password?.type === "required" && (
-            <p className="errorMsg">Password is required.</p>
+            <p className={styles.errorMsg}>Password is required.</p>
           )}
           {errors.password?.type === "checkLength" && (
-            <p className="errorMsg">
+            <p className={styles.errorMsg}>
               Password should be at-least 6 characters.
             </p>
           )}
           {errors.password?.type === "matchPattern" && (
-            <p className="errorMsg">
+            <p className={styles.errorMsg}>
               Password should contain at least one uppercase letter, lowercase
               letter, digit.
             </p>
           )}
         </div>
-        <div className="form-control">
+        <div className={styles.form.control}>
           <label></label>
-          <button type="submit">Login</button>
+          <button type="submit" className={styles.login} onClick={handleLogin}>Login</button>
         </div>
       </form>
     </div>

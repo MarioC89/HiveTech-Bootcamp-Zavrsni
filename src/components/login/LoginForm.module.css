@@ -13,28 +13,39 @@
     font-weight: 300;
   }
   
-  .form-control {
+  .form.control {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
   }
   
-  .form-control label {
+  .form.control label {
     width: 20%;
     padding-right: 20px;
     margin-bottom: 5px;
   }
   
-  .form-control input[type="text"],
-  .form-control input[type="password"] {
+  .form.control input[type="text"],
+  .form.control input[type="password"] {
     width: 40%;
     padding: 5px;
   }
   
-  button {
-    max-width: 150px;
-    padding: 5px 10px;
-  }
+
+button.login {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button.login:hover {
+  background-color: #3e8e41;
+}
+
   
   @media screen and (max-width: 600px) {
     body {
@@ -45,12 +56,12 @@
       max-width: 100%;
     }
   
-    .form-control {
+    .form.control {
       flex-direction: column;
     }
   
-    .form-control input[type="text"],
-    .form-control input[type="password"] {
+    .form.control input[type="text"],
+    .form.control input[type="password"] {
       width: inherit;
     }
   }
