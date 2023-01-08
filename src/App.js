@@ -20,7 +20,7 @@ function App() {
     <>
       <div className={styles.container}>
         {!isLoggedIn ? (
-          <LoginForm onLogin={handleLogin}/>
+          <LoginForm onSubmit={handleLogin}/>
         ) : (
           <TodoList />
         )}

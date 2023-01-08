@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -8,19 +9,17 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  /* function handleSubmit(event) {
-    event.preventDefault();
-    onLogin();
-  }; */
 
   const handleLogin = () => {
     setIsLoggedIn(true);
-    localStorage.setItem(isLoggedIn, true);
+    localStorage.setItem("isLoggedIn", true);
+    window.location.reload();
   };
 
   const onSubmit = (data) => {
     console.log(data);
     localStorage.setItem('user', JSON.stringify(data));
+    handleLogin();
   };
 
   const {
@@ -44,7 +43,7 @@ export default function LoginForm() {
               }
             })}
           />
-          {errors.email && <p className="errorMsg">{errors.email.message}</p>}
+          {errors.email && <p className={styles.errorMsg}>{errors.email.message}</p>}
         </div>
         <div className={styles.form.control}>
           <label>Password</label>
@@ -75,7 +74,7 @@ export default function LoginForm() {
         </div>
         <div className={styles.form.control}>
           <label></label>
-          <button type="submit" className={styles.login} onClick={handleLogin}>Login</button>
+          <button type="submit" className={styles.login} >Login</button>
         </div>
       </form>
     </div>

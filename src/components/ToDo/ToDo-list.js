@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 
 import styles from "../ToDo/ToDo.module.css"
@@ -8,9 +9,18 @@ const TodoList = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.setItem(isLoggedIn, false);
+    localStorage.setItem("isLoggedIn", false);
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('user');
     window.location.reload();
   };
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'false') {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchTodos = async () => {
